@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - RoofGuard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Inter"', 'sans-serif'],
+                        heading: ['\"Inter\"', 'sans-serif'],
+                    },
+                    fontWeight: {
+                        light: '300',
+                        regular: '400',
+                        medium: '500',
+                        semibold: '600',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Oswald:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* === RESET & CORE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        h1, h2, h3, h4, h5, h6, .brand-logo {
+            font-family: 'Inter', sans-serif;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        /* === THEME VARIABLES === */
+        :root {
+            --bg-color: #F8FAFC;
+            --bg-secondary: #F1F5F9;
+            --bg-card: #FFFFFF;
+            --bg-inverted: #0F172A;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --accent-color: #0284C7; /* Blue accent for waterproofing/roofing */
+            --accent-dark: #0369A1;
+            --border-color: #E2E8F0;
+            --nav-bg: #F8FAFC;
+            --drawer-bg: rgba(248, 250, 252, 0.98);
+            --menu-hover-bg: rgba(2, 132, 199, 0.08);
+        }
+
+        /* DARK MODE */
+        body.dark-mode {
+            --bg-color: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-card: #162032;
+            --bg-inverted: #020617;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-color: #38BDF8;
+            --accent-dark: #0284C7;
+            --border-color: #334155;
+            --nav-bg: #0F172A;
+            --drawer-bg: rgba(15, 23, 42, 0.98);
+            --menu-hover-bg: rgba(56, 189, 248, 0.1);
+        }
+
+        /* RTL SUPPORT */
+        [dir="rtl"] {
+            text-align: right;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .mr-auto {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        @keyframes subtleZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
+        }
+
+        .animate-zoom {
+            animation: subtleZoom 25s infinite alternate ease-in-out;
+        }
+
+        /* === NAVBAR DESIGN === */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 32px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .navbar.scrolled {
+            height: 75px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            background: var(--drawer-bg);
+            backdrop-filter: blur(10px);
+        }
+
+        body.dark-mode .navbar.scrolled {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 10px 20px;
+            margin: 0 4px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--accent-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--accent-color);
+        }
+
+        .dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            transform: translateY(15px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .navbar.scrolled .dropdown-menu {
+            top: 60px;
+        }
+
+        .dropdown-inner {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-top: 3px solid var(--accent-color);
+            min-width: 220px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            padding: 8px 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode .dropdown-inner {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 24px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-align: left;
+            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dropdown-item:hover {
+            background: var(--menu-hover-bg);
+            color: var(--accent-color);
+            padding-left: 28px;
+        }
+
+        [dir="rtl"] .dropdown-item:hover {
+            padding-left: 24px;
+            padding-right: 28px;
+        }
+
+        /* PILL TOGGLE */
+        .theme-toggle-pill {
+            width: 52px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .theme-toggle-pill i {
+            font-size: 10px;
+            z-index: 1;
+        }
+
+        .theme-toggle-pill .fa-sun {
+            color: #EAB308;
+        }
+
+        .theme-toggle-pill .fa-moon {
+            color: #64748B;
+        }
+
+        .theme-toggle-pill .thumb {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+            border: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .theme-toggle-pill .thumb {
+            transform: translateX(24px);
+            background: #334155;
+            border-color: var(--border-color);
+        }
+
+        /* RTL BUTTON STYLE */
+        .rtl-btn-style {
+            width: 44px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 400;
+            cursor: pointer;
+            color: var(--text-main);
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .rtl-btn-style:hover {
+            background: var(--accent-color);
+            color: #fff;
+            border-color: var(--accent-color);
+        }
+
+        /* === BUTTON DESIGN === */
+        .btn {
+            padding: 10px 24px;
+            font-weight: 500;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 1px solid transparent;
+            font-family: 'Inter', sans-serif;
+            border-radius: 2px;
+        }
+
+        .btn-solid {
+            background: var(--accent-color);
+            color: #FFFFFF !important;
+        }
+
+        .btn-solid:hover {
+            background: var(--accent-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color) !important;
+        }
+
+        /* MOBILE OVERLAY & DRAWER */
+        .drawer-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .fullscreen-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 420px;
+            height: 100dvh;
+            background: var(--drawer-bg);
+            z-index: 1001;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-left: 1px solid var(--border-color);
+        }
+
+        [dir="rtl"] .fullscreen-menu {
+            right: auto;
+            left: 0;
+            transform: translateX(-100%);
+            border-left: none;
+            border-right: 1px solid var(--border-color);
+        }
+
+        .fullscreen-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .mobile-link {
+            display: block;
+            width: 100%;
+            padding: 18px 32px;
+            font-size: 1.25rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            text-transform: uppercase;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .mobile-link:hover {
+            color: var(--accent-color);
+            padding-left: 40px;
+            background: var(--menu-hover-bg);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        [dir="rtl"] .mobile-link:hover {
+            padding-left: 32px;
+            padding-right: 40px;
+            border-left: none;
+            border-right: 4px solid var(--accent-color);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-inverted);
+            border-top: 1px solid var(--border-color);
+            padding-top: 80px;
+            color: white;
+        }
+
+        footer h4 {
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 24px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        footer a, footer li, footer span {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-link-circle {
+            width: 44px;
+            height: 44px;
+            border-radius: 2px;
+            border: 1px solid #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            color: white;
+            background: transparent;
+        }
+
+        .social-link-circle:hover {
+            background: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #FFFFFF;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding: 32px 0;
+            margin-top: 60px;
+        }
+    </style>
+
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+</head>
+
+<body>
+
+    <!-- NAVBAR PART -->
+    <nav class="navbar" id="main-nav">
+        <div class="w-full flex items-center justify-between max-w-[1440px] mx-auto">
+            <div class="flex items-center">
+                <a href="index.html" class="text-3xl font-medium brand-logo tracking-wide block"
+                    style="color: var(--text-main) !important; text-decoration: none;">
+                    <i class="fas fa-hard-hat"
+                        style="color: var(--accent-color); margin-right: 0.2em; font-size: 0.9em; vertical-align: middle;"></i>RoofGuard
+                </a>
+            </div>
+
+            <div class="hidden xl:flex justify-center items-center flex-1">
+                <div class="dropdown">
+                    <div class="nav-link">Home <i class="fas fa-chevron-down text-[10px] ml-1"></i></div>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-inner">
+                            <a href="index.html" class="dropdown-item">Home Page 1</a>
+                            <a href="home-2.html" class="dropdown-item">Home Page 2</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="services.html" class="nav-link">Services</a>
+                <a href="pricing.html" class="nav-link">Pricing</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <!-- FAQ is Active here -->
+                <a href="faq.html" class="nav-link active">FAQ</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </div>
+
+            <div class="hidden xl:flex items-center gap-5">
+                <div id="theme-toggle-desktop" class="theme-toggle-pill" title="Toggle Dark Mode">
+                    <i class="fas fa-sun"></i><i class="fas fa-moon"></i>
+                    <div class="thumb"></div>
+                </div>
+                <button id="rtl-btn" class="rtl-btn-style" title="Toggle LTR/RTL">LTR</button>
+                <div class="w-px h-6 bg-[var(--border-color)] mx-1"></div>
+                <a href="contact.html" class="btn btn-solid">Book Inspection</a>
+            </div>
+
+            <div class="xl:hidden flex items-center justify-end gap-4">
+                <button id="mobile-btn"
+                    class="text-2xl text-[var(--text-main)] transition-colors hover:text-[var(--accent-color)]">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HAMBURGER MENU PART -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <div class="fullscreen-menu" id="fullscreen-menu">
+        <div class="w-full px-8 py-8 flex justify-between items-center shrink-0 border-b border-[var(--border-color)]">
+            <a href="index.html" class="text-2xl font-medium brand-logo tracking-wide block"
+                style="color: var(--text-main) !important; text-decoration: none;">
+                <i class="fas fa-hard-hat"
+                    style="color: var(--accent-color); margin-right: 0.2em; font-size: 0.9em; vertical-align: middle;"></i>RoofGuard
+            </a>
+            <button id="close-menu"
+                class="w-10 h-10 flex items-center justify-center transition-all text-2xl text-[var(--text-main)] hover:text-[var(--accent-color)]">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="flex flex-col w-full overflow-y-auto flex-1 py-4">
+            <a href="index.html" class="mobile-link">Home Page 1</a>
+            <a href="home-2.html" class="mobile-link">Home Page 2</a>
+            <a href="about.html" class="mobile-link">About</a>
+            <a href="services.html" class="mobile-link">Services</a>
+            <a href="pricing.html" class="mobile-link">Pricing</a>
+            <a href="blog.html" class="mobile-link">Blog</a>
+            <!-- FAQ is Active here -->
+            <a href="faq.html" class="mobile-link"
+                style="color: var(--accent-color); border-left: 4px solid var(--accent-color);">FAQ</a>
+            <a href="contact.html" class="mobile-link">Contact</a>
+        </div>
+
+        <div class="w-full px-8 py-8 border-t border-[var(--border-color)] flex flex-col gap-6 shrink-0 bg-[var(--bg-secondary)]">
+            <div class="flex justify-between items-center w-full">
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-normal text-[12px] uppercase tracking-widest font-heading">Theme</span>
+                    <div id="theme-toggle-mobile" class="theme-toggle-pill"><i class="fas fa-sun"></i><i class="fas fa-moon"></i>
+                        <div class="thumb"></div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="text-[var(--text-muted)] font-normal text-[12px] uppercase tracking-widest font-heading">Dir</span>
+                    <button id="rtl-toggle-mobile" class="rtl-btn-style">LTR</button>
+                </div>
+            </div>
+            <div class="flex gap-4 w-full">
+                <a href="contact.html" class="btn btn-solid flex-1">Book Inspection</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO BANNER PART -->
+    <section class="relative w-full h-[100dvh] pt-20 flex items-center justify-center overflow-hidden border-b border-[var(--border-color)]">
+        <div class="absolute inset-0 z-0 bg-black">
+            <img src="images/roof (4).jpg" alt="Frequently Asked Questions"
+                class="w-full h-full object-cover animate-zoom opacity-50" />
+            <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/70 to-black/40"></div>
+        </div>
+
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12 w-full flex flex-col items-start justify-center relative z-10">
+            <div class="max-w-3xl">
+                <span class="text-[var(--accent-color)] text-sm font-medium uppercase tracking-[0.2em] mb-4 inline-block bg-black/60 backdrop-blur-sm px-4 py-2 border-l-4 border-[var(--accent-color)] shadow-md">
+                    <i class="fas fa-question-circle mr-2"></i> Client Support Hub
+                </span>
+
+                <h1 class="text-4xl md:text-6xl xl:text-7xl font-medium leading-[1.1] mb-6 text-white uppercase tracking-tight drop-shadow-2xl">
+                    Got <span class="text-[var(--accent-color)]">Questions?</span> <br class="hidden sm:block">
+                    We Have Answers.
+                </h1>
+
+                <p class="text-slate-200 text-lg md:text-xl leading-relaxed max-w-2xl font-normal mb-10 drop-shadow-xl">
+                    Find quick answers to common questions about our roofing services, materials, warranties, and maintenance procedures. We believe in complete transparency.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                    <a href="#residential-faq" class="btn btn-solid text-center shadow-lg hover:shadow-xl">
+                        <i class="fas fa-search mr-2"></i> Browse FAQs
+                    </a>
+                    <a href="contact.html"
+                        class="btn btn-outline !border-2 !border-white !text-white hover:!bg-white hover:!text-black text-center shadow-lg hover:shadow-xl bg-black/20 backdrop-blur-sm hover:!bg-white">
+                        <i class="fas fa-headset mr-2"></i> Contact Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 1: RESIDENTIAL FAQ (Accordion with 6 Questions) -->
+    <section id="residential-faq" class="py-24 bg-[var(--bg-secondary)] border-y border-[var(--border-color)]">
+        <div class="max-w-[900px] mx-auto px-6 xl:px-12">
+            <div class="text-center mb-12">
+                <h5 class="text-[var(--accent-color)] text-sm tracking-[0.2em] mb-4"><i class="fas fa-home mr-2"></i> Residential</h5>
+                <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">Home Roofing FAQs</h2>
+            </div>
+            <div class="space-y-4">
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>How long does a typical roof last?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        A typical asphalt shingle roof lasts 15 to 25 years. However, premium architectural shingles can last 30+ years, and metal roofs can easily exceed 50 years depending on local climate conditions.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>Can you put a new roof over an existing one?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        While legally permissible in some areas to overlay one layer of shingles, we strongly advise against it. A complete tear-off allows us to inspect the underlying decking for rot and ensures a much longer lifespan for the new materials.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>What are the signs I need a roof replacement?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Look for curling, buckling, or missing shingles. Excessive shingle granules in your gutters, sagging roof decks, and water stains on your interior ceilings are also major red flags indicating it's time for a replacement.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>How much does a new roof cost?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Pricing varies significantly based on square footage, pitch, and materials. We provide 100% free, no-obligation detailed estimates after an on-site inspection so you know exactly what to expect.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>Do you offer financing options?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Yes! We partner with leading financial institutions to provide flexible, low-interest payment plans. This allows you to secure your home immediately without depleting your savings.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>What type of shingles do you use?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        We exclusively use top-tier manufacturer products such as GAF, Owens Corning, and CertainTeed, ensuring maximum durability, superior wind resistance, and excellent warranty coverage.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: COMMERCIAL FAQ (Accordion with 6 Questions) -->
+    <section id="commercial-faq" class="py-24 bg-[var(--bg-color)]">
+        <div class="max-w-[900px] mx-auto px-6 xl:px-12">
+            <div class="text-center mb-12">
+                <h5 class="text-[var(--accent-color)] text-sm tracking-[0.2em] mb-4"><i class="fas fa-building mr-2"></i> Commercial</h5>
+                <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">Flat Roof & Waterproofing FAQs</h2>
+            </div>
+            <div class="space-y-4">
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>What is flat roof waterproofing?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Flat roof waterproofing involves applying a protective barrier—often a liquid polymer or rubberized membrane—over the structural deck. This creates a seamless, watertight seal to prevent ponding water from leaking into the building.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>How often should a commercial roof be inspected?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Industry standards recommend inspecting commercial roofs at least twice a year (typically fall and spring), and immediately following any major weather events like severe storms or hail.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>Do you fix ponding water on flat roofs?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Yes. Ponding water (water sitting for more than 48 hours) degrades roofing materials fast. We solve this by adding tapered insulation to improve slopes and installing enhanced drainage systems.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>What is a liquid-applied membrane?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        It is a monolithic, fully-bonded fluid coating that cures to form a rubber-like waterproof membrane. It's highly effective because it has no seams—the most common failure point in traditional commercial roofing.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>Will waterproofing disrupt my business operations?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        In most cases, no. Liquid-applied systems and modern restoration techniques have low odor and minimal noise compared to a full structural tear-off, allowing your business to operate normally during application.
+                    </div>
+                </details>
+                <details class="group bg-[var(--bg-card)] border border-[var(--border-color)] rounded-sm overflow-hidden shadow-sm">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none p-6 text-[var(--text-main)] uppercase hover:text-[var(--accent-color)] transition-colors [&::-webkit-details-marker]:hidden">
+                        <span>How long does a commercial warranty last?</span>
+                        <span class="transition-transform duration-300 group-open:rotate-180 text-[var(--accent-color)]"><i class="fas fa-chevron-down"></i></span>
+                    </summary>
+                    <div class="text-[var(--text-muted)] font-light p-6 pt-0 border-t border-[var(--border-color)] mt-2 leading-relaxed">
+                        Depending on the materials used (TPO, EPDM, or Liquid Coatings), commercial warranties range from 10 to 25 years. We also offer extended workmanship warranties on all our commercial installations.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ROOFING GLOSSARY -->
+    <section class="py-24 bg-[var(--bg-secondary)] border-y border-[var(--border-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h5 class="text-[var(--accent-color)] text-sm tracking-[0.2em] mb-4"><i class="fas fa-book mr-2"></i> Terminology</h5>
+                <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">Quick Roofing Glossary</h2>
+                <p class="text-[var(--text-muted)] font-light">Understand the technical terms our contractors use when explaining your project.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-[var(--bg-card)] p-6 border border-[var(--border-color)]">
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Flashing</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">Metal strips used to seal roof intersections and edges to prevent water leaks around chimneys, vents, and valleys.</p>
+                </div>
+                <div class="bg-[var(--bg-card)] p-6 border border-[var(--border-color)]">
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Underlayment</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">A secondary waterproofing layer (often felt or synthetic) installed directly on the roof deck beneath the shingles.</p>
+                </div>
+                <div class="bg-[var(--bg-card)] p-6 border border-[var(--border-color)]">
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Pitch</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">The steepness or slope of a roof, calculated by the number of inches it rises vertically for every 12 inches it extends horizontally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: WARRANTY & GUARANTEE INFO -->
+    <section class="py-24 bg-[var(--bg-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12">
+            <div class="flex flex-col lg:flex-row items-center gap-12 bg-[var(--bg-secondary)] border border-[var(--border-color)] p-8 lg:p-16">
+                <div class="w-full lg:w-1/2">
+                    <div class="w-16 h-16 bg-[var(--accent-color)] text-white flex items-center justify-center text-3xl mb-6 rounded-sm"><i class="fas fa-shield-alt"></i></div>
+                    <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">The RoofGuard Guarantee</h2>
+                    <p class="text-[var(--text-muted)] font-light leading-relaxed mb-6">We don't just build roofs; we build peace of mind. Every complete roof replacement comes with an industry-leading manufacturer warranty covering material defects for up to 50 years.</p>
+                    <ul class="space-y-3 text-[var(--text-muted)] font-light mb-8">
+                        <li><i class="fas fa-check text-[var(--accent-color)] mr-2"></i> 10-Year Craftsmanship Warranty on all labor.</li>
+                        <li><i class="fas fa-check text-[var(--accent-color)] mr-2"></i> Fully transferable warranties if you sell your home.</li>
+                        <li><i class="fas fa-check text-[var(--accent-color)] mr-2"></i> Free annual inspections for the first 3 years.</li>
+                    </ul>
+                    <a href="contact.html" class="btn btn-outline">Ask About Warranties</a>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <img src="images/roof (14).jpg" alt="Contractor shaking hands" class="w-full h-80 object-cover border border-[var(--border-color)] shadow-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: MAINTENANCE CHECKLIST -->
+    <section class="py-24 bg-[var(--bg-secondary)] border-y border-[var(--border-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h5 class="text-[var(--accent-color)] text-sm tracking-[0.2em] mb-4"><i class="fas fa-clipboard-check mr-2"></i> DIY Tips</h5>
+                <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">Quarterly Maintenance Checklist</h2>
+                <p class="text-[var(--text-muted)] font-light">Extend the lifespan of your roof by performing these basic checks every season.</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-[var(--bg-card)] p-8 text-center border border-[var(--border-color)] hover:border-[var(--accent-color)] transition-colors group">
+                    <i class="fas fa-leaf text-4xl text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors mb-4"></i>
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Clear Debris</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">Remove leaves and branches from valleys to prevent moisture trapping.</p>
+                </div>
+                <div class="bg-[var(--bg-card)] p-8 text-center border border-[var(--border-color)] hover:border-[var(--accent-color)] transition-colors group">
+                    <i class="fas fa-water text-4xl text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors mb-4"></i>
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Clean Gutters</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">Ensure downspouts are flowing freely to prevent water backup under shingles.</p>
+                </div>
+                <div class="bg-[var(--bg-card)] p-8 text-center border border-[var(--border-color)] hover:border-[var(--accent-color)] transition-colors group">
+                    <i class="fas fa-search-plus text-4xl text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors mb-4"></i>
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Inspect Flashing</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">Visually check the caulking and metal around chimneys and vent pipes.</p>
+                </div>
+                <div class="bg-[var(--bg-card)] p-8 text-center border border-[var(--border-color)] hover:border-[var(--accent-color)] transition-colors group">
+                    <i class="fas fa-tree text-4xl text-[var(--text-muted)] group-hover:text-[var(--accent-color)] transition-colors mb-4"></i>
+                    <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Trim Branches</h4>
+                    <p class="text-[var(--text-muted)] text-sm font-light">Cut back overhanging tree limbs to prevent physical scraping damage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: VIDEO GUIDES -->
+    <section class="py-24 bg-[var(--bg-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h5 class="text-[var(--accent-color)] text-sm tracking-[0.2em] mb-4"><i class="fas fa-play-circle mr-2"></i> Visual Guides</h5>
+                <h2 class="text-3xl lg:text-4xl font-medium uppercase mb-4 text-[var(--text-main)]">Watch & Learn</h2>
+                <p class="text-[var(--text-muted)] font-light">Educational videos to help you understand your roofing system better.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="relative group cursor-pointer border border-[var(--border-color)] bg-[var(--bg-card)]">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/roof (7).jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-play text-4xl text-white drop-shadow-md group-hover:text-[var(--accent-color)] transition-colors"></i></div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Spotting Leaks Early</h4>
+                        <p class="text-[var(--text-muted)] text-sm font-light">A 3-minute guide to finding attic leaks.</p>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer border border-[var(--border-color)] bg-[var(--bg-card)]">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/roof (5).jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-play text-4xl text-white drop-shadow-md group-hover:text-[var(--accent-color)] transition-colors"></i></div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">The Tear-Off Process</h4>
+                        <p class="text-[var(--text-muted)] text-sm font-light">See what happens during day 1 of a new roof.</p>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer border border-[var(--border-color)] bg-[var(--bg-card)]">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="images/about3.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100">
+                        <div class="absolute inset-0 flex items-center justify-center"><i class="fas fa-play text-4xl text-white drop-shadow-md group-hover:text-[var(--accent-color)] transition-colors"></i></div>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-medium text-[var(--text-main)] uppercase mb-2">Choosing Shingles</h4>
+                        <p class="text-[var(--text-muted)] text-sm font-light">Architectural vs. 3-Tab: Which is best?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FINAL CONTACT CTA -->
+    <section class="py-20 bg-[var(--bg-inverted)] border-t border-[var(--border-color)]">
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12 text-center">
+            <h2 class="text-3xl lg:text-4xl font-medium text-white uppercase mb-4">Still Need Help?</h2>
+            <p class="text-slate-300 font-light mb-8 max-w-xl mx-auto text-lg">If you couldn't find the answer you were looking for, our customer support team is ready to assist you directly.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="contact.html" class="btn btn-solid"><i class="fas fa-paper-plane mr-2"></i> Send us a Message</a>
+                <a href="tel:+18005557663" class="btn btn-outline !border-2 !border-white !text-white hover:!bg-white hover:!text-black"><i class="fas fa-phone-alt mr-2"></i> Call Support Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER PART -->
+    <footer>
+        <div class="max-w-[1440px] mx-auto px-6 xl:px-12">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-10 pt-4">
+                <div class="xl:col-span-4">
+                    <div class="mb-8">
+                        <a href="index.html" class="text-3xl font-medium brand-logo tracking-wide block text-white"
+                            style="text-decoration: none;">
+                            <i class="fas fa-hard-hat"
+                                style="color: var(--accent-color); margin-right: 0.2em; font-size: 0.9em; vertical-align: middle;"></i>RoofGuard
+                        </a>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed text-sm mb-8 max-w-sm font-sans font-light">
+                        Your trusted partner for commercial and residential roofing. From complete roof replacements to advanced waterproofing systems, we ensure your property stays dry and secure.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="social-link-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link-circle"><i class="fa-brands fa-x-twitter"></i></a>
+                    </div>
+                </div>
+
+                <div class="xl:col-span-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+                        <div>
+                            <h4>Client Portals</h4>
+                            <ul class="space-y-4">
+                                <li><a href="contact.html">Contact Us</a></li>
+                                <li><a href="pricing.html">Project Pricing</a></li>
+                                <li><a href="faq.html">FAQ & Maintenance</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Our Services</h4>
+                            <ul class="space-y-4">
+                                <li><a href="services.html">Roof Installation</a></li>
+                                <li><a href="services.html">Leak Repairs</a></li>
+                                <li><a href="services.html">Flat Roof Waterproofing</a></li>
+                                <li><a href="services.html">Gutter Maintenance</a></li>
+                            </ul>
+                        </div>
+                        <div class="sm:col-span-2 md:col-span-1">
+                            <h4>Contact Us</h4>
+                            <ul class="space-y-5 text-slate-400 text-sm">
+                                <li class="flex items-start gap-4"><i class="fas fa-map-marker-alt mt-1 shrink-0"
+                                        style="color: var(--accent-color);"></i><span>450 Construction Way<br>Building
+                                        Zone, 90210</span></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-phone shrink-0"
+                                        style="color: var(--accent-color);"></i><a href="tel:+18005557663"
+                                        class="text-white font-medium tracking-wide hover:text-[var(--accent-color)] transition-colors duration-300">+1 (800) 555-ROOF</a></li>
+                                <li class="flex items-center gap-4"><i class="fas fa-envelope shrink-0"
+                                        style="color: var(--accent-color);"></i><a href="contact.html"
+                                        class="break-all hover:text-[var(--accent-color)]">info@roofguard.com</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="footer-bottom flex flex-col md:flex-row justify-between items-center text-xs gap-6 uppercase tracking-[1px] font-heading font-normal text-slate-500">
+                <p>&copy; 2026 RoofGuard Contractors. All rights reserved.</p>
+                <div class="flex flex-wrap justify-center gap-6 sm:gap-8">
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Warranty Policy</a>
+                    <a href="#">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVITY SCRIPT -->
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Drawer Logic
+        const mobileBtn = document.getElementById('mobile-btn');
+        const fullscreenMenu = document.getElementById('fullscreen-menu');
+        const closeMenu = document.getElementById('close-menu');
+        const drawerOverlay = document.getElementById('drawer-overlay');
+
+        function toggleMenu() {
+            fullscreenMenu.classList.toggle('active');
+            drawerOverlay.classList.toggle('active');
+            document.body.style.overflow = fullscreenMenu.classList.contains('active') ? 'hidden' : 'auto';
+        }
+
+        mobileBtn.onclick = toggleMenu;
+        closeMenu.onclick = toggleMenu;
+        drawerOverlay.onclick = toggleMenu;
+
+        // Theme Toggle Logic
+        const themeDesktop = document.getElementById('theme-toggle-desktop');
+        const themeMobile = document.getElementById('theme-toggle-mobile');
+        const theme = localStorage.getItem('theme') || 'light';
+
+        function updateThemeUI(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                if (themeMobile) themeMobile.classList.add('active');
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (themeMobile) themeMobile.classList.remove('active');
+            }
+        }
+
+        updateThemeUI(theme === 'dark');
+
+        function toggleTheme() {
+            const isDark = !document.body.classList.contains('dark-mode');
+            updateThemeUI(isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        themeDesktop.onclick = toggleTheme;
+        if (themeMobile) themeMobile.onclick = toggleTheme;
+
+        // RTL Logic
+        const rtlBtn = document.getElementById('rtl-btn');
+        const rtlMobile = document.getElementById('rtl-toggle-mobile');
+        const dir = localStorage.getItem('dir') || 'ltr';
+
+        function updateRTLUI(currentDir) {
+            const isRTL = currentDir === 'rtl';
+            if (rtlBtn) rtlBtn.innerText = isRTL ? 'RTL' : 'LTR';
+            if (rtlMobile) rtlMobile.innerText = isRTL ? 'RTL' : 'LTR';
+        }
+
+        if (dir === 'rtl') {
+            document.documentElement.dir = 'rtl';
+        }
+        updateRTLUI(dir);
+
+        function toggleRTL() {
+            const isRTL = document.documentElement.dir === 'rtl';
+            const newDir = isRTL ? 'ltr' : 'rtl';
+            document.documentElement.dir = newDir;
+            localStorage.setItem('dir', newDir);
+            updateRTLUI(newDir);
+        }
+
+        if (rtlBtn) rtlBtn.onclick = toggleRTL;
+        if (rtlMobile) rtlMobile.onclick = toggleRTL;
+    </script>
+</body>
+
+</html>
