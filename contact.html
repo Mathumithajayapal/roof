@@ -106,6 +106,96 @@
             --menu-hover-bg: rgba(56, 189, 248, 0.1);
         }
 
+        /* === MAP SECTION STYLING === */
+        .map-iframe {
+            border: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            transition: filter 0.4s ease;
+        }
+
+        body.dark-mode .map-iframe {
+            filter: invert(90%) hue-rotate(180deg) contrast(1.15) brightness(0.9);
+        }
+
+        /* Map Info Box High-Contrast Styling */
+        .map-info-card {
+            background-color: #FFFFFF !important;
+            color: #0F172A !important;
+            border: 1px solid #CBD5E1 !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .map-info-card {
+            background-color: #0F172A !important;
+            color: #F8FAFC !important;
+            border: 1px solid #334155 !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+        }
+
+        .map-info-title {
+            color: #0F172A !important;
+        }
+
+        body.dark-mode .map-info-title {
+            color: #F8FAFC !important;
+        }
+
+        .map-info-address {
+            color: #334155 !important;
+        }
+
+        body.dark-mode .map-info-address {
+            color: #CBD5E1 !important;
+        }
+
+        .map-btn-primary {
+            background-color: #0284C7 !important;
+            color: #FFFFFF !important;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .map-btn-primary:hover {
+            background-color: #0369A1 !important;
+            color: #FFFFFF !important;
+        }
+
+        body.dark-mode .map-btn-primary {
+            background-color: #0284C7 !important;
+            color: #FFFFFF !important;
+        }
+
+        body.dark-mode .map-btn-primary:hover {
+            background-color: #38BDF8 !important;
+            color: #0F172A !important;
+        }
+
+        .map-btn-secondary {
+            background-color: #F1F5F9 !important;
+            color: #0F172A !important;
+            border: 1px solid #CBD5E1 !important;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .map-btn-secondary:hover {
+            background-color: #E2E8F0 !important;
+            color: #0F172A !important;
+        }
+
+        body.dark-mode .map-btn-secondary {
+            background-color: #1E293B !important;
+            color: #F8FAFC !important;
+            border: 1px solid #475569 !important;
+        }
+
+        body.dark-mode .map-btn-secondary:hover {
+            background-color: #334155 !important;
+            color: #FFFFFF !important;
+        }
+
         /* RTL SUPPORT */
         [dir="rtl"] {
             text-align: right;
@@ -760,22 +850,41 @@
                 <h2 class="text-4xl lg:text-5xl font-medium uppercase mb-4">Find Us On The Map</h2>
                 <p class="text-[var(--text-muted)] font-light">Visit our main office to browse roofing material samples, consult with our engineers, or speak directly with our billing department.</p>
             </div>
-            <div class="relative w-full h-[500px] border border-[var(--border-color)] shadow-sm bg-[var(--bg-card)] p-2">
+            <div class="relative w-full h-[520px] border border-[var(--border-color)] shadow-sm bg-[var(--bg-card)] p-2 rounded-sm overflow-hidden">
                 <!-- Embedded Google Map -->
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1m3!1d193595.25280986968!2d-74.14448744594246!3d40.697631233379375!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1698248301550!5m2!1sen!2sus" 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0; filter: grayscale(100%) contrast(1.2);" 
+                <iframe
+                    id="contact-map"
+                    class="map-iframe w-full h-full block border-0"
+                    src="https://maps.google.com/maps?q=450%20Construction%20Way%2C%20New%20York%2C%20NY%2090210&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;output=embed"
+                    title="RoofGuard Headquarters Location Map" 
+                    width="100%"
+                    height="100%"
+                    style="border:0;" 
                     allowfullscreen="" 
-                    loading="lazy" 
+                    loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
                 <!-- Floating Info Box -->
-                <div class="absolute bottom-8 left-8 bg-[var(--bg-card)] p-6 border border-[var(--border-color)] shadow-xl max-w-sm hidden md:block">
-                    <h4 class="text-lg font-medium uppercase mb-2 text-[var(--text-main)]">RoofGuard Main HQ</h4>
-                    <p class="text-[var(--text-muted)] text-sm font-light mb-4">450 Construction Way, Building Zone, NY 90210</p>
-                    <a href="#" class="text-[var(--accent-color)] text-sm uppercase tracking-wider font-semibold hover:underline">Get Directions &rarr;</a>
+                <div class="map-info-card absolute bottom-4 left-4 right-4 sm:right-auto sm:bottom-6 sm:left-6 p-5 sm:p-6 shadow-2xl max-w-sm z-10 rounded-sm">
+                    <div class="flex items-center gap-2.5 mb-2.5">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <h4 class="map-info-title text-base sm:text-lg font-bold uppercase tracking-wider">RoofGuard Main HQ</h4>
+                    </div>
+                    <p class="map-info-address text-xs sm:text-sm font-medium mb-5 leading-relaxed">
+                        450 Construction Way, Building Zone, NY 90210
+                    </p>
+                    <div class="flex flex-wrap items-center gap-2.5">
+                        <a href="https://maps.google.com/?q=450+Construction+Way,+New+York,+NY+90210" target="_blank" rel="noopener noreferrer" 
+                           class="map-btn-primary px-4 py-2.5 rounded text-xs uppercase tracking-wider inline-flex items-center gap-2 shadow-sm">
+                            <span>Get Directions</span>
+                            <i class="fas fa-arrow-right text-[10px]"></i>
+                        </a>
+                        <a href="tel:+18005557663" 
+                           class="map-btn-secondary px-3.5 py-2.5 rounded text-xs uppercase tracking-wider inline-flex items-center gap-1.5 shadow-sm">
+                            <i class="fas fa-phone text-[10px]"></i>
+                            <span>Call Office</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
